@@ -1,22 +1,35 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded",async function() {
     const chatBox = document.getElementById("chatBox");
     const userInput = document.getElementById("userInput");
     const sendButton = document.getElementById("sendButton");
 
-    sendButton.addEventListener("click", function() {
+    async function postData(url = "", data = {}) {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+        return response.json();
+    }
+    let responseData = await postData("http://localhost:3000/converse", {
+        is_first_message: true
+    });
+    appendMessage("Interviewer", responseData.response, "chatbot");
+    sendButton.addEventListener("click",async function() {
         const userMessage = userInput.value;
         
         // Append user message to chat box
         appendMessage("You", userMessage, "user");
 
-        // Here, you can send the user message to your chatbot API for processing
-        // and get the chatbot's response
-        
-        // For demonstration purposes, let's simulate a chatbot response
-        const chatbotResponse = "Hello, how can I assist you?";
+        responseData = await postData("http://localhost:3000/converse", {
+            is_first_message: false,
+            user_response: userMessage
+        });
         
         // Append chatbot response to chat box
-        appendMessage("Chatbot", chatbotResponse, "chatbot");
+        appendMessage("Interviewer", responseData, "chatbot");
 
         // Clear user input
         userInput.value = "";
