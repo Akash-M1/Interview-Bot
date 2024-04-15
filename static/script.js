@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded",async function() {
         });
         
         // Append chatbot response to chat box
-        appendMessage("Interviewer", responseData, "chatbot");
+        appendMessage("Interviewer", responseData.response, "chatbot");
 
         // Clear user input
         userInput.value = "";
