@@ -44,7 +44,6 @@ def generate_one_dataset():
         'role': 'system',
         'content': 'Candidate is being interviewed for ' + str(interview_time) + ' minutes on ' + ', '.join(topics_to_ask) + '.'
     })
-    print("Appended:", dataset_item[-1])
     with open('dataset_item.json', 'w') as f:
         json.dump(dataset_item, f, indent=4)
     
@@ -59,7 +58,6 @@ def generate_one_dataset():
             'role': 'interviewer',
             'content': question
         })
-        print("Appended:", dataset_item[-1])
         with open('dataset_item.json', 'w') as f:
             json.dump(dataset_item, f, indent=4)
         user_answer = chatgpt_api('Generate a response for the question ' + question)
@@ -67,16 +65,14 @@ def generate_one_dataset():
             'role': 'student',
             'content': user_answer
         })
-        print("Appended:", dataset_item[-1])
         with open('dataset_item.json', 'w') as f:
             json.dump(dataset_item, f, indent=4)
-        time_taken_by_user = randint(int(time_for_next_question * 0.8), int(time_for_next_question * 1.2))
+        time_taken_by_user = 2 + randint(int(time_for_next_question * 0.8), int(time_for_next_question * 1.2))
         time_left -= time_taken_by_user
         dataset_item.append({
             'role': 'system',
             'content': 'Time taken by user: ' + str(time_taken_by_user) + ' minutes. Time left: ' + str(time_left) + ' minutes.'
         })
-        print("Appended:", dataset_item[-1])
         with open('dataset_item.json', 'w') as f:
             json.dump(dataset_item, f, indent=4)
 
@@ -102,7 +98,14 @@ def generate_one_line():
     }
     return to_dump
 
-for i in range(3):
-    with open('dataset.jsonl', 'a') as f:
-        json.dump(generate_one_line(), f)
-        f.write('\n')
+for i in range(1000):
+    try:
+        with open('big_dataset.jsonl', 'a') as f:
+            json.dump(generate_one_line(), f)
+            f.write('\n')
+    except Exception as e:
+        if 'RECITATION' in str(e):
+            print(e)
+            print('RECITATION HIT! Retrying...')
+            continue
+        break
