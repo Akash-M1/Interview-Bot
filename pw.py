@@ -99,6 +99,7 @@ def generate_one_line():
     }
     return to_dump
 
+start_time = time.time()
 for i in range(1000):
     try:
         with open('big_dataset.jsonl', 'a') as f:
@@ -111,5 +112,4 @@ for i in range(1000):
             continue
         break
     finally:
-        print('Iteration:', i)
-        print('time:', time.time())
+        print('Iteration:', i, 'Time taken:', time.time() - start_time, 'seconds')
