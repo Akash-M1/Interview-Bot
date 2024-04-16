@@ -1,6 +1,7 @@
 from random import randint
 from langchain_google_genai import ChatGoogleGenerativeAI
 import json
+import time
 
 topics = ['operating system', 'datastructures', 'java', 'c++']
 gemini_key = "AIzaSyDO-1iFi5A0zPE3t7gUvmTwo96v5FIPhqY"
@@ -109,3 +110,6 @@ for i in range(1000):
             print('RECITATION HIT! Retrying...')
             continue
         break
+    finally:
+        print('Iteration:', i)
+        print('time:', time.time())
