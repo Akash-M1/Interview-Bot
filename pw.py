@@ -1,20 +1,26 @@
 from random import randint
+from langchain_google_genai import ChatGoogleGenerativeAI
+import json
 
-topics = ['os', 'ds', 'java', 'c++']
+topics = ['operating system', 'datastructures', 'java', 'c++']
+gemini_key = "AIzaSyDO-1iFi5A0zPE3t7gUvmTwo96v5FIPhqY"
+
+gemini_llm = ChatGoogleGenerativeAI(
+        model="gemini-pro",
+        google_api_key=gemini_key,
+        temperature=0.2,
+        convert_system_message_to_human=True,
+    )
 
 def chatgpt_api(msg):
-    # call chatgpt api
-    return 'this is the response from chatgpt api'
+    response = gemini_llm.invoke(msg).content
+    return response
 
 def ask_question(questions_asked_so_far, time):
     topics_not_asked_so_far = []
     for topic in topics:
         if topic not in questions_asked_so_far:
             topics_not_asked_so_far.append(topic)
-
-    if not topics_not_asked_so_far:
-        # generate bonus questions based on topics the user did not perform well in
-        pass
 
     # select random topic
     topic = topics_not_asked_so_far[randint(0, len(topics_not_asked_so_far) - 1)]
@@ -25,60 +31,78 @@ def ask_question(questions_asked_so_far, time):
 def generate_one_dataset():
     dataset_item = []
 
-    # random interview time
-    interview_time = randint(30, 120)
-
-    # select 1-3 randomly from topics
     num_topics = randint(1, 3)
+    # select 1-3 randomly from topics
     topics_to_ask = set()
     while len(topics_to_ask) < num_topics:
         topics_to_ask.add(topics[randint(0, len(topics) - 1)])
 
-    dataset_item.append[{
-        'user': 'system',
-        'message': 'Candidate is being interviewed for ' + str(interview_time) + ' minutes on ' + ', '.join(topics_to_ask) + '.'
-    }]
+    # random interview time
+    interview_time = randint(2 * num_topics, 20 * num_topics)
+
+    dataset_item.append({
+        'role': 'system',
+        'content': 'Candidate is being interviewed for ' + str(interview_time) + ' minutes on ' + ', '.join(topics_to_ask) + '.'
+    })
+    print("Appended:", dataset_item[-1])
+    with open('dataset_item.json', 'w') as f:
+        json.dump(dataset_item, f, indent=4)
     
     time_left = interview_time
     questions_asked_so_far = []
 
-    while time_left:
+    while time_left > 1:
 
-        time_for_next_question = 0.8 * time_left / num_topics
-        question = ask_question(questions_asked_so_far, )
-        dataset_item.append[{
-            'user': 'interviewer',
-            'message': question
-        }]
+        time_for_next_question = time_left / num_topics
+        question = ask_question(questions_asked_so_far, time_for_next_question)
+        dataset_item.append({
+            'role': 'interviewer',
+            'content': question
+        })
+        print("Appended:", dataset_item[-1])
+        with open('dataset_item.json', 'w') as f:
+            json.dump(dataset_item, f, indent=4)
         user_answer = chatgpt_api('Generate a response for the question ' + question)
-        dataset_item.append[{
-            'user': 'interviewee',
-            'message': user_answer
-        }]
-        time_taken_by_user = randint(time_for_next_question * 0.8, time_for_next_question * 1.2)
+        dataset_item.append({
+            'role': 'student',
+            'content': user_answer
+        })
+        print("Appended:", dataset_item[-1])
+        with open('dataset_item.json', 'w') as f:
+            json.dump(dataset_item, f, indent=4)
+        time_taken_by_user = randint(int(time_for_next_question * 0.8), int(time_for_next_question * 1.2))
         time_left -= time_taken_by_user
-        dataset_item.append[{
-            'user': 'system',
-            'message': 'Time taken by user: ' + str(time_taken_by_user) + ' minutes.'
-        }]
+        dataset_item.append({
+            'role': 'system',
+            'content': 'Time taken by user: ' + str(time_taken_by_user) + ' minutes. Time left: ' + str(time_left) + ' minutes.'
+        })
+        print("Appended:", dataset_item[-1])
+        with open('dataset_item.json', 'w') as f:
+            json.dump(dataset_item, f, indent=4)
 
     # collect all question and answers and concatenate it into a string
     conversation = ''
     for i in dataset_item:
-        if i['user'] == 'interviewer':
+        if i['role'] == 'interviewer':
             pass
         else:
-            if i['user'] == 'interviewee':
-                conversation += 'Interviewee: '
+            if i['role'] == 'student':
+                conversation += 'student: '
             else:
                 conversation += 'Interviewer: '
-            conversation += i['message'] + '\n'
-
-    # call chatgpt api to generate feedback
-    feedback = chatgpt_api('Generate feedback for the interviewee:\n' + conversation)
-    dataset_item.append[{
-        'user': 'Interviewer',
-        'message': feedback
-    }]
+            conversation += i['content'] + '\n'
 
     return dataset_item
+
+
+def generate_one_line():
+    dataset_item = generate_one_dataset()
+    to_dump = {
+        'messages': dataset_item
+    }
+    return to_dump
+
+for i in range(3):
+    with open('dataset.jsonl', 'a') as f:
+        json.dump(generate_one_line(), f)
+        f.write('\n')
