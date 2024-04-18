@@ -18,32 +18,33 @@ import os
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 
+
 def init_llm():
 
     gemini_key = "AIzaSyDO-1iFi5A0zPE3t7gUvmTwo96v5FIPhqY"
 
-    url = "bolt://localhost:7687"
-    # url = "bolt://34.172.124.157:7687"
-    username = "neo4j"
-    password = "llmneo4j"
+    # url = "bolt://localhost:7687"
+    # # url = "bolt://34.172.124.157:7687"
+    # username = "neo4j"
+    # password = "llmneo4j"
 
-    model_name = "sentence-transformers/all-mpnet-base-v2"
-    model_kwargs = {'device': 'cpu'}
-    encode_kwargs = {'normalize_embeddings': False}
-    embeddings = HuggingFaceEmbeddings(
-        model_name=model_name,
-        model_kwargs=model_kwargs,
-        encode_kwargs=encode_kwargs
-    )
-    print("Embedding initialized")
+    # model_name = "sentence-transformers/all-mpnet-base-v2"
+    # model_kwargs = {'device': 'cpu'}
+    # encode_kwargs = {'normalize_embeddings': False}
+    # embeddings = HuggingFaceEmbeddings(
+    #     model_name=model_name,
+    #     model_kwargs=model_kwargs,
+    #     encode_kwargs=encode_kwargs
+    # )
+    # print("Embedding initialized")
 
-    db = Neo4jVector.from_existing_index(
-        index_name="vector",
-        embedding=embeddings,
-        url=url,
-        username=username,
-        password=password,
-    )
+    # db = Neo4jVector.from_existing_index(
+    #     index_name="vector",
+    #     embedding=embeddings,
+    #     url=url,
+    #     username=username,
+    #     password=password,
+    # )
 
     gemini_llm = ChatGoogleGenerativeAI(
         model="gemini-pro",
@@ -52,16 +53,16 @@ def init_llm():
         convert_system_message_to_human=True,
     )
 
-    CHAIN_PROMPT = hub.pull("rlm/rag-prompt")
+    # CHAIN_PROMPT = hub.pull("rlm/rag-prompt")
 
-    fine_tuned_llm = RetrievalQA.from_chain_type(
-        llm=gemini_llm,
-        chain_type="stuff",
-        retriever=db.as_retriever(search_kwargs={"k":5}),
-        chain_type_kwargs={"prompt": CHAIN_PROMPT},
-    )
+    # fine_tuned_llm = RetrievalQA.from_chain_type(
+    #     llm=gemini_llm,
+    #     chain_type="stuff",
+    #     retriever=db.as_retriever(search_kwargs={"k":5}),
+    #     chain_type_kwargs={"prompt": CHAIN_PROMPT},
+    # )
 
-    return gemini_llm, fine_tuned_llm
+    return gemini_llm
 
 def reset_user_performance():
 
@@ -112,9 +113,15 @@ def get_answer_quality(question, user_answer, attempt=0):
         else:
             return 0
         
+
 def generate_question(difficulty, topic):
-    prompt = f"""Generate a {difficulty} level question on {topic}"""
-    response = fine_tuned_llm.invoke(prompt)
+    prompt = f"""Im referring to Bloom's level of questions. The different types of questions are
+    Understand level, Analyse level, Create level.
+    ***
+    Generate a {difficulty} level {topic} question
+    ***
+    """
+    response = gemini_llm.invoke(prompt)
     logging.info(f"Generated question: {response['result']}")
     return response['result']
 
@@ -128,19 +135,22 @@ def get_question(user_performance):
         - the quality of the answer is greater than 5, generate a "hard" question
     3. If the user has answered two questions for a topic, move onto the next topic
     """
-
     for topic in user_performance:
         if len(user_performance[topic]) == 0:
-            return { 'question': generate_question('medium', topic), 'topic': topic, 'difficulty': 'medium' }
+            return { 'question': generate_question('mediocre', topic), 'topic': topic, 'difficulty': 'mediocre' }
         
         if len(user_performance[topic]) == 1:
             if user_performance[topic][0]['quality'] < 5:
-                return { 'question': generate_question('easy', topic), 'topic': topic, 'difficulty': 'easy' }
+                return { 'question': generate_question('simple', topic), 'topic': topic, 'difficulty': 'simple' }
             else:
-                return { 'question': generate_question('hard', topic), 'topic': topic, 'difficulty': 'hard' }
+                return { 'question': generate_question('tough', topic), 'topic': topic, 'difficulty': 'tough' }
         
         if len(user_performance[topic]) == 2:
-            continue
+            if user_performance[topic][1]['quality'] > 8:
+                return { 'question': generate_question('tough', topic), 'topic': topic, 'difficulty': 'tough' }
+            else:
+                continue
+
 
 def get_summary(user_performance):
     summary = "Summary of your performance:\n\n"
@@ -196,8 +206,15 @@ def converse():
         return jsonify({"error": "Invalid JSON format", "status": "error"}), 400
 
 
-topics_supported = ['concepts related to operating systems', "object oriented programming"]
-gemini_llm, fine_tuned_llm = init_llm()
+topics_supported = [
+    "Understanding based operating systems concept", 
+    "Analyse based operating systems concept",
+    "Application based operating systems concept",
+    "Understanding based object oriented programming concept",
+    "Analyse based object oriented programming concept",
+    "Application based object oriented programming concept"
+    ]
+gemini_llm= init_llm()
 user_performance = {}
 previously_asked_question = {}
 number_of_questions = 4
