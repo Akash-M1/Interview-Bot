@@ -122,8 +122,8 @@ def generate_question(difficulty, topic):
     ***
     """
     response = gemini_llm.invoke(prompt).content
-    logging.info(f"Generated question: {response['result']}")
-    return response['result']
+    logging.info(f"Generated question: {response}")
+    return response
 
 def get_question(user_performance):
     """

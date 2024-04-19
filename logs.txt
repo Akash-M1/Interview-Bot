@@ -77,3 +77,15 @@ TypeError: string indices must be integers, not 'str'
  * Running on http://192.168.29.51:3000
 2024-04-19 18:15:39 [INFO] [33mPress CTRL+C to quit[0m
 2024-04-19 18:15:43 [INFO] 127.0.0.1 - - [19/Apr/2024 18:15:43] "[31m[1mGET /converse HTTP/1.1[0m" 405 -
+2024-04-19 18:17:55 [INFO] Beginning Server...
+2024-04-19 18:17:55 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:3000
+ * Running on http://192.168.29.51:3000
+2024-04-19 18:17:55 [INFO] [33mPress CTRL+C to quit[0m
+2024-04-19 18:17:59 [INFO] 127.0.0.1 - - [19/Apr/2024 18:17:59] "[36mGET / HTTP/1.1[0m" 304 -
+2024-04-19 18:17:59 [INFO] 127.0.0.1 - - [19/Apr/2024 18:17:59] "[33mGET /business-logo.png HTTP/1.1[0m" 404 -
+2024-04-19 18:17:59 [INFO] 127.0.0.1 - - [19/Apr/2024 18:17:59] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+2024-04-19 18:17:59 [INFO] 127.0.0.1 - - [19/Apr/2024 18:17:59] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-04-19 18:18:02 [INFO] Generated question: What is the primary function of an operating system?
+2024-04-19 18:18:02 [INFO] 127.0.0.1 - - [19/Apr/2024 18:18:02] "POST /converse HTTP/1.1" 200 -
