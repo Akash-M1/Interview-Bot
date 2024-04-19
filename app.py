@@ -121,7 +121,7 @@ def generate_question(difficulty, topic):
     Generate a {difficulty} level {topic} question
     ***
     """
-    response = gemini_llm.invoke(prompt)
+    response = gemini_llm.invoke(prompt).content
     logging.info(f"Generated question: {response['result']}")
     return response['result']
 
@@ -141,7 +141,7 @@ def get_question(user_performance):
         
         if len(user_performance[topic]) == 1:
             if user_performance[topic][0]['quality'] < 5:
-                return { 'question': generate_question('simple', topic), 'topic': topic, 'difficulty': 'simple' }
+                continue
             else:
                 return { 'question': generate_question('tough', topic), 'topic': topic, 'difficulty': 'tough' }
         
