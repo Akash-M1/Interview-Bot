@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded",async function() {
         });
         return response.json();
     }
-    let responseData = await postData("http://localhost:3000/converse", {
+    let responseData = await postData("/converse", {
         is_first_message: true
     });
     appendMessage("Interviewer", responseData.response, "chatbot");
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded",async function() {
         // Append user message to chat box
         appendMessage("You", userMessage, "user");
 
-        responseData = await postData("http://localhost:3000/converse", {
+        responseData = await postData("/converse", {
             is_first_message: false,
             user_response: userMessage
         });
