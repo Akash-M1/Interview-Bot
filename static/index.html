@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>ChatBMS</title>
+</head>
+<body>
+    <nav id="sidebar">
+        <div class="float-top">
+            <div class="sidebar-controls">
+                <button class="new-chat"><i class="fa fa-plus"></i> New chat</button>
+                <button class="hide-sidebar"><i class="fa fa-chevron-left"></i></button>
+            </div>
+            <ul class="conversations">
+                <li class="grouping">Today</li>
+                <li class="active">
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Current Conversation.. </button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li class="grouping">Yesterday</li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Operating System Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Google Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li class="grouping">Previous 7 days</li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Amazon Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Java Programming Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Facebook Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Microsoft Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Data Structures Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Algorithms Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Apple Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Operating Systems Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> Oracle Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+                <li>
+                    <button class="conversation-button"><i class="fa fa-message fa-regular"></i> C++ Interview Prep</button>
+                    <div class="fade"></div>
+                    <div class="edit-buttons">
+                        <button><i class="fa fa-edit"></i></button>
+                        <button><i class="fa fa-trash"></i></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="user-menu">
+            <button>
+                <i class="user-icon">u</i>
+                username
+                <i class="fa fa-ellipsis dots"></i>
+            </button>
+            <ul>
+                <li><button>My plan</button></li>
+                <li><button>Custom instructions</button></li>
+                <li><button>Settings &amp; Beta</button></li>
+                <li><button>Log out</button></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="view new-chat-view">
+            <div class="model-selector">
+                <button class="gpt-3 selected">
+                    <i class="fa fa-bolt"></i> Basic
+                    <div class="model-info">
+                        <div class="model-info-box">
+                            <p>Our fastest model, great for most every day tasks.</p>
+
+                            <p class="secondary">Available to Free and Plus users</p>
+                        </div>
+                    </div>
+                </button>
+                <button class="gpt-4">
+                    <i class="fa fa-wand-magic-sparkles"></i> Advanced
+                    <div class="model-info">
+                        <div class="model-info-box">
+                            <p>Our most capable model, great for creative stuff.</p>
+
+                            <p class="secondary">Available for Plus users.</p>
+                        </div>
+                    </div>
+                </button>
+            </div>
+
+            <div class="logo">
+                ChatBMS
+            </div>
+        </div>
+
+        <div class="view current-conversation-view">
+            <div class="model-name">
+                <i class="fa fa-bolt"></i> Default
+            </div>
+        </div>
+
+        <div class="view conversation-view">
+            <div class="model-name">
+                <i class="fa fa-bolt"></i> Default
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What is an operating system?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>An operating system (OS) is a software that manages computer hardware and software resources, and provides common services for computer programs. It acts as an intermediary between users and the computer hardware.</p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What are the types of operating systems?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>There are various types of operating systems, including:
+                        <ul>
+                            <li>Batch Operating Systems</li>
+                            <li>Time-sharing Operating Systems</li>
+                            <li>Distributed Operating Systems</li>
+                            <li>Real-time Operating Systems</li>
+                            <li>Mobile Operating Systems</li>
+                            <li>Network Operating Systems</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What is process management in an operating system?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>Process management is a function of the operating system that handles the creation, scheduling, and termination of processes. It includes allocating resources, managing inter-process communication, and ensuring fair allocation of CPU time among different processes.</p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What is virtual memory?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>Virtual memory is a memory management technique that gives an application program the impression it has contiguous working memory while in reality it is physically fragmented. It allows the system to use more memory than is physically available by using a portion of the hard disk as an extension of RAM.</p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What is a file system?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>A file system is a method and data structure that the operating system uses to control how data is stored and retrieved. It organizes data into files and directories and manages storage devices such as hard drives, solid-state drives, and optical discs.</p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What is device management in an operating system?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>Device management is the function of the operating system that handles hardware devices such as printers, disk drives, and network adapters. It includes device drivers, which allow the operating system to control and communicate with devices.</p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What are system calls?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>System calls are functions provided by the operating system that allow user-level programs to request services or resources from the kernel. Examples include file I/O operations, process creation, and inter-process communication.</p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What is a kernel?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>The kernel is the core component of an operating system that manages system resources such as the CPU, memory, and devices. It acts as a bridge between software applications and hardware.</p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What is process synchronization?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>Process synchronization is a mechanism in operating systems to manage the execution of multiple processes that may access shared data or resources concurrently. Techniques include mutexes, semaphores, and monitors to prevent race conditions and deadlocks.</p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What are threads in an operating system?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>Threads, also known as lightweight processes, are a way for a program to split itself into multiple concurrent units of execution. Threads share the same memory and resources of the process, allowing for parallelism and improved efficiency.</p>
+                </div>
+            </div>
+            <div class="user message">
+                <div class="identity">
+                    <i class="user-icon">u</i>
+                </div>
+                <div class="content">
+                    <p>What is memory management in an operating system?</p>
+                </div>
+            </div>
+            <div class="assistant message">
+                <div class="identity">
+                    <i class="gpt user-icon">G</i>
+                </div>
+                <div class="content">
+                    <p>Memory management is a function of the operating system that handles the allocation and deallocation of memory to different processes. It includes techniques like paging, segmentation, and virtual memory to optimize the use of available memory and ensure fair distribution among processes.</p>
+                </div>
+            </div>
+        </div>
+        
+
+        <div id="message-form">
+            <div class="message-wrapper">
+                <textarea id="message" rows="1" placeholder="Send a message"></textarea>
+                <button class="send-button"><i class="fa fa-paper-plane"></i></button>
+            </div>
+            <div class="disclaimer">This is an internal tool only available in the college network</div>
+        </div>
+    </main>
+    <script src="/static/script.js"></script>
+</body>
+</html>
