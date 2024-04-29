@@ -53,10 +53,22 @@ function show_view( view_selector ) {
 
 new_chat_button.addEventListener("click", function() {
     show_view( ".new-chat-view" );
+    document.querySelectorAll(".conversations li").forEach(li => {
+        li.classList.remove("active");
+    });
 });
 
 document.querySelectorAll(".conversation-button").forEach(button => {
     button.addEventListener("click", function() {
+        // Remove the "active" class from all list items
+        document.querySelectorAll(".conversations li").forEach(li => {
+            li.classList.remove("active");
+        });
+
+        // Add the "active" class to the parent list item of the clicked button
+        button.closest("li").classList.add("active");
+
+        // Check the button text to determine which view to show
         if (button.textContent.includes("Current Conversation..")) {
             show_view(".current-conversation-view");
         } else {
@@ -66,8 +78,12 @@ document.querySelectorAll(".conversation-button").forEach(button => {
 });
 
 
+
 document.addEventListener("DOMContentLoaded", function() {
     show_view(".new-chat-view");
+    document.querySelectorAll(".conversations li").forEach(li => {
+        li.classList.remove("active");
+    });
 });
 
 document.querySelector('.send-button').addEventListener('click', async function() {
