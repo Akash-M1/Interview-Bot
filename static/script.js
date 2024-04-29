@@ -191,11 +191,51 @@ document.querySelector('.send-button').addEventListener('click', async function(
     }
 });
 
-function getResponse(message) {
-    // Dummy function to simulate an asynchronous response from GPT-3
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(`Response to: "${message}"`);
-        }, 2000);  // Simulate a 2-second delay
-    });
+async function getResponse(messageText) {
+    // Define the API endpoint
+    const apiEndpoint = '/converse';
+
+    // Determine if this is the first message
+    const conversation = document.querySelector('.current-conversation-view');
+    const isFirstMessage = conversation.querySelectorAll('.user.message').length === 1;
+
+    // Prepare the request body
+    let requestBody = {};
+    if (isFirstMessage) {
+        requestBody.is_first_message = true;
+    } else {
+        requestBody.user_response = messageText;
+    }
+
+    // Use fetch API to send a POST request to the endpoint
+    try {
+        const response = await fetch(apiEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        // Check if the response is successful
+        if (response.ok) {
+            // Parse the JSON response
+            const jsonResponse = await response.json();
+            
+            // Check if the response contains an error
+            if (jsonResponse.status === 'success') {
+                // Return the response message from the server
+                return jsonResponse.response;
+            } else {
+                console.error('Error in response:', jsonResponse.error);
+                return `Error: ${jsonResponse.error}`;
+            }
+        } else {
+            console.error('Network response was not ok');
+            return 'Error: Network response was not ok';
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+        return 'Error: An error occurred while fetching the response';
+    }
 }

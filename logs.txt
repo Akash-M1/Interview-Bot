@@ -118,3 +118,85 @@
 2024-04-29 16:00:49 [INFO] 127.0.0.1 - - [29/Apr/2024 16:00:49] "GET / HTTP/1.1" 200 -
 2024-04-29 16:00:49 [INFO] 127.0.0.1 - - [29/Apr/2024 16:00:49] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
 2024-04-29 16:00:49 [INFO] 127.0.0.1 - - [29/Apr/2024 16:00:49] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-04-29 16:04:45 [INFO] Beginning Server...
+2024-04-29 16:04:45 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:3000
+ * Running on http://10.10.5.243:3000
+2024-04-29 16:04:45 [INFO] [33mPress CTRL+C to quit[0m
+2024-04-29 16:04:54 [INFO] 127.0.0.1 - - [29/Apr/2024 16:04:54] "[36mGET / HTTP/1.1[0m" 304 -
+2024-04-29 16:04:54 [INFO] 127.0.0.1 - - [29/Apr/2024 16:04:54] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-04-29 16:04:54 [INFO] 127.0.0.1 - - [29/Apr/2024 16:04:54] "GET /static/script.js HTTP/1.1" 200 -
+2024-04-29 16:04:57 [ERROR] Exception on /converse [POST]
+Traceback (most recent call last):
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/server.py", line 157, in converse
+    quality = get_answer_quality(previously_asked_question['question'], user_response)
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'question'
+2024-04-29 16:04:57 [INFO] 127.0.0.1 - - [29/Apr/2024 16:04:57] "[35m[1mPOST /converse HTTP/1.1[0m" 500 -
+2024-04-29 16:08:14 [INFO] 127.0.0.1 - - [29/Apr/2024 16:08:14] "[36mGET / HTTP/1.1[0m" 304 -
+2024-04-29 16:08:14 [INFO] 127.0.0.1 - - [29/Apr/2024 16:08:14] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-04-29 16:08:14 [INFO] 127.0.0.1 - - [29/Apr/2024 16:08:14] "GET /static/script.js HTTP/1.1" 200 -
+2024-04-29 16:08:21 [ERROR] Exception on /converse [POST]
+Traceback (most recent call last):
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/server.py", line 157, in converse
+    quality = get_answer_quality(previously_asked_question['question'], user_response)
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'question'
+2024-04-29 16:08:21 [INFO] 127.0.0.1 - - [29/Apr/2024 16:08:21] "[35m[1mPOST /converse HTTP/1.1[0m" 500 -
+2024-04-29 16:08:37 [INFO] 127.0.0.1 - - [29/Apr/2024 16:08:37] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-04-29 16:08:40 [INFO] 127.0.0.1 - - [29/Apr/2024 16:08:40] "[36mGET / HTTP/1.1[0m" 304 -
+2024-04-29 16:08:40 [INFO] 127.0.0.1 - - [29/Apr/2024 16:08:40] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-04-29 16:08:40 [INFO] 127.0.0.1 - - [29/Apr/2024 16:08:40] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-04-29 16:08:43 [ERROR] Exception on /converse [POST]
+Traceback (most recent call last):
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/.venv/lib/python3.12/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chiragmanjeshwar/Desktop/Interview-Bot/server.py", line 157, in converse
+    quality = get_answer_quality(previously_asked_question['question'], user_response)
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'question'
+2024-04-29 16:08:43 [INFO] 127.0.0.1 - - [29/Apr/2024 16:08:43] "[35m[1mPOST /converse HTTP/1.1[0m" 500 -
+2024-04-29 16:09:11 [INFO] 127.0.0.1 - - [29/Apr/2024 16:09:11] "[36mGET / HTTP/1.1[0m" 304 -
+2024-04-29 16:09:11 [INFO] 127.0.0.1 - - [29/Apr/2024 16:09:11] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-04-29 16:09:11 [INFO] 127.0.0.1 - - [29/Apr/2024 16:09:11] "GET /static/script.js HTTP/1.1" 200 -
+2024-04-29 16:09:17 [INFO] Generated question: What is the primary function of an operating system?
+2024-04-29 16:09:17 [INFO] 127.0.0.1 - - [29/Apr/2024 16:09:17] "POST /converse HTTP/1.1" 200 -
+2024-04-29 16:09:23 [INFO] Quality of answer: 0
+2024-04-29 16:09:23 [INFO] User performance: {'Understanding based operating systems concept': [{'difficulty': 'mediocre', 'quality': 0}], 'Analyse based operating systems concept': [], 'Application based operating systems concept': [], 'Understanding based object oriented programming concept': [], 'Analyse based object oriented programming concept': [], 'Application based object oriented programming concept': []}
+2024-04-29 16:09:24 [INFO] Generated question: Explain the key differences between a monolithic and a microkernel operating system architecture, highlighting the advantages and disadvantages of each approach.
+2024-04-29 16:09:24 [INFO] 127.0.0.1 - - [29/Apr/2024 16:09:24] "POST /converse HTTP/1.1" 200 -
