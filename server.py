@@ -1,23 +1,12 @@
-from langchain_community.vectorstores.neo4j_vector import Neo4jVector
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.chat_models import ChatOllama, ChatOpenAI
-from langchain.chains import RetrievalQA
-from typing import Tuple
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-from langchain import hub
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain.prompts import ChatPromptTemplate
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 import logging
 import sys
 import os
+from uuid import uuid4
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
-
-
+app.secret_key = str(uuid4())
 
 def init_llm():
 
@@ -108,6 +97,9 @@ def get_question(user_performance):
         
         if len(user_performance[topic]) == 1:
             if user_performance[topic][0]['quality'] < 5:
+                threshold = session.get('threshold', 0)
+                threshold += 1
+                session['threshold'] = threshold
                 continue
             else:
                 return { 'question': generate_question('tough', topic), 'topic': topic, 'difficulty': 'tough' }
@@ -140,7 +132,7 @@ def converse():
     if json_data is None:
         return jsonify({"error": "No JSON data received", "status": "error"}), 400
     
-    if 'is_first_message' in json_data and json_data['is_first_message'] == True:
+    if 'is_first_message' in json_data and json_data['is_first_message']:
         user_performance = reset_user_performance()
 
         question = get_question(user_performance)
@@ -158,8 +150,8 @@ def converse():
         user_performance[previously_asked_question['topic']].append({"difficulty": previously_asked_question['difficulty'], "quality": quality})
         logging.info(f"User performance: {user_performance}")
 
-        questions_asked = sum([len(user_performance[i]) for i in user_performance])
-        if questions_asked >= number_of_questions:
+        threshold = session.get('threshold', 0)
+        if threshold == len(topics_supported) - 1:
             summary = get_summary(user_performance)
             previously_asked_question = None
             return jsonify({"response": summary, "status": "success"})
@@ -176,15 +168,14 @@ def converse():
 topics_supported = [
     "Understanding based operating systems concept", 
     "Analyse based operating systems concept",
-    "Application based operating systems concept",
-    "Understanding based object oriented programming concept",
-    "Analyse based object oriented programming concept",
-    "Application based object oriented programming concept"
+    # "Application based operating systems concept",
+    # "Understanding based object oriented programming concept",
+    # "Analyse based object oriented programming concept",
+    # "Application based object oriented programming concept"
 ]
 gemini_llm= init_llm()
 user_performance = {}
 previously_asked_question = {}
-number_of_questions = 4
 
 if __name__ == '__main__':
 

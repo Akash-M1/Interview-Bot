@@ -247,8 +247,8 @@ async function getResponse(messageText) {
                 return `Error: ${jsonResponse.error}`;
             }
         } else {
-            console.error('Network response was not ok');
-            return 'Error: Network response was not ok';
+            console.error('Interview completed, All the best!');
+            return 'Interview completed, All the best!';
         }
     } catch (error) {
         console.error('Fetch error:', error);
