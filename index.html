@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="business-logo.png" width="30" height="30" class="d-inline-block align-top" alt="Business Logo">
+            Business Name
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#signupModal">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Sign In</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Profile
+                    </div>
+                    <div class="card-body">
+                        <img src="profile-photo.jpg" style="position: relative;left: 20%; height: 150px; width: 150px;" class="img-fluid rounded-circle mb-3" alt="Profile Photo">
+                        <p><strong>Name:</strong> Akash M</p>
+                        <p><strong>Email:</strong> akashm.cs20@bmsce.ac.in</p>
+                        <p><strong>Phone:</strong> 9611309909</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        Subject Scores
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">OS</h5>
+                        <canvas id="subject1Chart" width="400" height="200"></canvas>
+                        <h5 class="card-title mt-4">DBMS</h5>
+                        <canvas id="subject2Chart" width="400" height="200"></canvas>
+                        <h5 class="card-title mt-4">DSA</h5>
+                        <canvas id="subject3Chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const subject1Data = {
+            labels: ['Understanding', 'Analyzing', 'Application'],
+            datasets: [{
+                label: 'Previous Trends',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                data: [80, 70, 85]
+            }, {
+                label: 'Current Marks',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                data: [90, 75, 80]
+            }]
+        };
+
+        const subject2Data = {
+            labels: ['Understanding', 'Analyzing', 'Application'],
+            datasets: [{
+                label: 'Previous Trends',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                data: [80, 70, 85]
+            }, {
+                label: 'Current Marks',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                data: [90, 75, 80]
+            }]
+        };
+
+        const subject3Data = {
+            labels: ['Understanding', 'Analyzing', 'Application'],
+            datasets: [{
+                label: 'Previous Trends',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                data: [50, 60, 85]
+            }, {
+                label: 'Current Marks',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                data: [90, 75, 80]
+            }]
+        };
+
+        const subject1Ctx = document.getElementById('subject1Chart').getContext('2d');
+        new Chart(subject1Ctx, {
+            type: 'bar',
+            data: subject1Data,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        const subject2Ctx = document.getElementById('subject2Chart').getContext('2d');
+        new Chart(subject2Ctx, {
+            type: 'bar',
+            data: subject2Data,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        const subject3Ctx = document.getElementById('subject3Chart').getContext('2d');
+        new Chart(subject3Ctx, {
+            type: 'bar',
+            data: subject3Data,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
