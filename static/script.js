@@ -154,7 +154,7 @@ document.querySelector('.send-button').addEventListener('click', async function(
         tempContent.classList.add('content');
         
         const tempParagraph = document.createElement('p');
-        tempParagraph.textContent = 'Thinking...';
+        tempParagraph.textContent = 'Analysing your answer...';
         
         tempContent.appendChild(tempParagraph);
         tempMessage.appendChild(tempContent);

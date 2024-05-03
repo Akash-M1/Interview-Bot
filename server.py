@@ -1,32 +1,29 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request, session, render_template
+import webbrowser
 import logging
 import sys
 import os
 from uuid import uuid4
+import requests
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.secret_key = str(uuid4())
 
 def init_llm():
-
     gemini_key = "AIzaSyDO-1iFi5A0zPE3t7gUvmTwo96v5FIPhqY"
-
     gemini_llm = ChatGoogleGenerativeAI(
         model="gemini-pro",
         google_api_key=gemini_key,
         temperature=0.2,
         convert_system_message_to_human=True,
     )
-
     return gemini_llm
 
 def reset_user_performance():
-
     user_performance = {}
     for i in topics_supported:
         user_performance[i] = []
-
     return user_performance
 
 def get_answer_quality(question, user_answer, attempt=0):
@@ -82,24 +79,31 @@ def generate_question(difficulty, topic):
     return response
 
 def get_question(user_performance):
-    """
-    logic for generating a question based on user performance:
-
-    1. If the user has not answered any questions yet, generate "medium" difficulty for first topic
-    2. If the user has answered one "medium" question for a topic, if 
-        - the quality of the answer is less than 5, generate an "easy" question
-        - the quality of the answer is greater than 5, generate a "hard" question
-    3. If the user has answered two questions for a topic, move onto the next topic
-    """
+    threshold_incremented = False
     for topic in user_performance:
         if len(user_performance[topic]) == 0:
+            if not threshold_incremented:
+                print("Initial question ", topic)
+                threshold = session.get('threshold', 0)
+                print("Threshhold ", threshold)
+                threshold += 1
+                print("Threshhold after increment ", threshold)
+                session['threshold'] = threshold
+                print("Threshhold after save", threshold)
+                threshold_incremented = True
             return { 'question': generate_question('mediocre', topic), 'topic': topic, 'difficulty': 'mediocre' }
         
         if len(user_performance[topic]) == 1:
             if user_performance[topic][0]['quality'] < 5:
-                threshold = session.get('threshold', 0)
-                threshold += 1
-                session['threshold'] = threshold
+                if not threshold_incremented:
+                    print("Next questions ", topic)
+                    threshold = session.get('threshold', 0)
+                    print("Threshhold ", threshold)
+                    threshold += 1
+                    print("Threshhold after increment ", threshold)
+                    session['threshold'] = threshold
+                    print("Threshhold after save", threshold)
+                    threshold_incremented = True
                 continue
             else:
                 return { 'question': generate_question('tough', topic), 'topic': topic, 'difficulty': 'tough' }
@@ -110,6 +114,14 @@ def get_question(user_performance):
             else:
                 continue
 
+def post_summary_to_endpoint(summary):
+    url = "http://localhost:3000/summary"
+    response = requests.post(url, json={"summary": summary})
+    return response
+
+def open_summary_in_browser():
+    url = "http://localhost:3000/summary"
+    webbrowser.open_new_tab(url)
 
 def get_summary(user_performance):
     summary = "Summary of your performance:\n\n"
@@ -120,9 +132,19 @@ def get_summary(user_performance):
         summary += "\n"
     return summary
 
+
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
+@app.route('/summary', methods=['GET'])
+def display_summary():
+    summary = get_summary(user_performance)         
+    # print(type(summary))
+    # print(summary)
+    print(user_performance)
+    return render_template('summary.html', summary=summary)
 
 @app.route('/converse', methods=['POST'])
 def converse():
@@ -134,10 +156,8 @@ def converse():
     
     if 'is_first_message' in json_data and json_data['is_first_message']:
         user_performance = reset_user_performance()
-
         question = get_question(user_performance)
         previously_asked_question = question
-
         return jsonify({"response": question['question'], "status": "success"})
     
     elif 'user_response' in json_data:
@@ -151,15 +171,16 @@ def converse():
         logging.info(f"User performance: {user_performance}")
 
         threshold = session.get('threshold', 0)
-        if threshold == len(topics_supported) - 1:
+        print(threshold," " ,len(topics_supported))
+        if threshold == len(topics_supported):
             summary = get_summary(user_performance)
             previously_asked_question = None
+            # open_summary_in_browser()
             return jsonify({"response": summary, "status": "success"})
 
-        question = get_question(user_performance)
-        previously_asked_question = question
+        previously_asked_question = get_question(user_performance)  # Update previously_asked_question here
 
-        return jsonify({"response": question['question'], "status": "success"})
+        return jsonify({"response": previously_asked_question['question'], "status": "success"})
     
     else:
         return jsonify({"error": "Invalid JSON format", "status": "error"}), 400
@@ -167,7 +188,7 @@ def converse():
 
 topics_supported = [
     "Understanding based operating systems concept", 
-    "Analyse based operating systems concept",
+    # "Analyse based operating systems concept",
     # "Application based operating systems concept",
     # "Understanding based object oriented programming concept",
     # "Analyse based object oriented programming concept",
@@ -192,4 +213,4 @@ if __name__ == '__main__':
     )
 
     logging.info('Beginning Server...')
-    app.run(host='0.0.0.0', port=3000)
+    app.run(host='0.0.0.0', port=3000, debug=True)
